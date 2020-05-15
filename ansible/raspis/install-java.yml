@@ -1,0 +1,10 @@
+---
+- hosts: raspis
+  remote_user: ubuntu
+  tasks:
+    - name: install java jre & jdk
+      become: yes
+      apt:
+        pkg: default-jdk
+        pkg: default-jre
+  

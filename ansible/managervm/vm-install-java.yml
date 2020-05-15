@@ -1,0 +1,11 @@
+---
+- hosts: managervm
+  remote_user: vagrant
+  tasks:
+    - name: install java jre & jdk
+      become: yes
+      apt:
+        pkg: default-jre
+        pkg: default-jdk
+        update_cache: yes
+  

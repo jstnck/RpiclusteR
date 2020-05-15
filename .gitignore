@@ -1,0 +1,8 @@
+#ignore the local (my laptop) testing folder - also includes large spark installation
+test-thinkpad/
+test-thinkpad/*
+spark-2.4.5-bin-hadoop.tgz
+vagrantVM/*.log
+vagrantVM/.vagrant
+vagrantVM/.vagrant/*
+*.log

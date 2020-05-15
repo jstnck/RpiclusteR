@@ -1,0 +1,17 @@
+---
+- hosts: raspis
+  remote_user: ubuntu
+  become: yes
+  tasks:
+  - name: create project directory
+    file:
+      path: /home/ubuntu/projects/picluster/spark/
+      state: directory
+
+  - name: copy spark installer to raspis and extract tar
+    unarchive:
+      src: ~/projects/picluster/spark/spark-2.4.5-bin-hadoop2.7.tgz
+      dest: /home/ubuntu/projects/picluster/spark/
+      mode: '0751'
+  
+

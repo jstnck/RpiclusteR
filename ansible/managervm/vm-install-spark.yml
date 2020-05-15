@@ -1,0 +1,20 @@
+---
+- hosts: managervm
+  remote_user: vagrant
+  become: yes
+  tasks:
+    - name: ensure spark dir exists
+      file:
+        path: /home/vagrant/projects/picluster/spark/
+        state: directory
+    - name: copy spark installer to manager vm and extract tar
+      unarchive:
+        src: ~/projects/picluster/spark/spark-2.4.5-bin-hadoop2.7.tgz
+        dest: /home/vagrant/projects/picluster/spark/
+        mode: '0751'
+    - name: Create a symbolic link
+      file:
+        src: /home/vagrant/projects/picluster/spark/spark-2.4.5-bin-hadoop2.7
+        dest: /usr/local/spark
+        state: link    
+

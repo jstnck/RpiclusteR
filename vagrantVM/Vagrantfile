@@ -1,0 +1,18 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.define "managervm" do |managervm|
+    managervm.vm.box = "hashicorp/bionic64"
+    managervm.vm.network "private_network", ip: "192.168.2.100"
+    managervm.vm.hostname = "managervm"
+    managervm.ssh.forward_agent = true
+    managervm.ssh.port = 2222    
+    managervm.vm.synced_folder ".", "/vagrant"
+    managervm.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+    end
+    managervm.vm.provision "ansible" do |ansible|
+      ansible.playbook = "../ansible/managervm/manager-playbook.yml"
+    end
+  end
+end
