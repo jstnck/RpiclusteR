@@ -1,0 +1,9 @@
+---
+- hosts: managervm
+  remote_user: vagrant
+  become: no
+  
+  tasks:
+    
+    - name: set env variables
+      command: export SPARK_HOME=/usr/local/spark

@@ -1,6 +1,6 @@
 ---
-- hosts: managervm
-  remote_user: vagrant
+- hosts: raspis
+  remote_user: ubuntu
   
   tasks:
     

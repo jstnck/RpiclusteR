@@ -1,12 +1,13 @@
 ---
-- hosts: all
+- hosts: raspis
+  remote_user: ubuntu
   become: yes
   
   tasks:
   
   - name: create project directory
     file:
-      path: /home/vagrant/projects/picluster/spark/
+      path: /home/ubuntu/projects/picluster/spark/
       state: directory
   
   - name: Update apt-get repo and cache

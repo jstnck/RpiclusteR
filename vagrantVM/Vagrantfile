@@ -1,18 +1,43 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
 Vagrant.configure("2") do |config|
-  config.vm.define "managervm" do |managervm|
-    managervm.vm.box = "hashicorp/bionic64"
-    managervm.vm.network "private_network", ip: "192.168.2.100"
-    managervm.vm.hostname = "managervm"
-    managervm.ssh.forward_agent = true
-    managervm.ssh.port = 2222    
-    managervm.vm.synced_folder ".", "/vagrant"
-    managervm.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
-    end
-    managervm.vm.provision "ansible" do |ansible|
-      ansible.playbook = "../ansible/managervm/manager-playbook.yml"
-    end
+
+  config.vm.box = "hashicorp/bionic64"
+
+  config.vm.network "forwarded_port", guest: 8080, host: 18080, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 7077, host: 17077, host_ip: "127.0.0.1"
+
+
+  config.vm.network "private_network", ip: "192.168.2.101"
+
+  config.vm.hostname = "managervm"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # hostdir, guestdir
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  config.vm.provider "virtualbox" do |vb|
+   vb.memory = "1024"
   end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "v"
+    #ansible.become = true
+    ansible.playbook = "../ansible/managervm/manager-playbook.yml"
+  end
+
+  #run shell commands here  
+  #config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
 end
